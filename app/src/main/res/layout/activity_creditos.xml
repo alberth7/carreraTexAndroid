@@ -18,7 +18,7 @@
                 android:layout_height="250dp"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:background="@drawable/degradado"
+                android:background="@drawable/degradadox"
 
                 >
                 <ImageView

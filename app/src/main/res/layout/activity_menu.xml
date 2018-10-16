@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/degradado"
+    android:background="@drawable/degradadox"
 
     tools:context="com.example.alberth.carreracochestex.MainActivity">
 
@@ -46,7 +46,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/boton"
+            android:background="@drawable/boton2"
             android:text="TOUCH"
             android:textSize="20sp"
 
@@ -60,7 +60,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
 
-            android:background="@drawable/boton"
+            android:background="@drawable/boton2"
             android:text="ACELEROMETRO"
             android:textSize="20sp" />
 
@@ -71,7 +71,7 @@
             android:layout_marginBottom="40dp"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
-            android:background="@drawable/boton"
+            android:background="@drawable/boton2"
             android:text="CREDITOS"
             android:textSize="20sp" />
 
