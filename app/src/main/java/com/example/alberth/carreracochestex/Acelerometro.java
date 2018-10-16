@@ -1,71 +1,82 @@
 package com.example.alberth.carreracochestex;
 
-import android.graphics.Color;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
-public class Acelerometro extends AppCompatActivity {
-    SensorManager sensorManager;
-    Sensor sensor;
-    SensorEventListener sensorEventListener;
-
+public class Acelerometro extends Activity implements SensorEventListener {
+    private SensorManager sensorManager;
+    MiGLSurfaceView superficie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        if (sensor == null)
-            finish();
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        sensorEventListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent sensorevent) {
-                float x = sensorevent.values[0];
+        /* Orientación de la pantalla vertical (PORTRAIT) u horizontal(LANDSCAPE) */
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-                System.out.println("Valor GiroX" + x);
-                if (x < -5 ) {
-                    getWindow().getDecorView().setBackgroundColor(Color.BLUE);
-                }else {
-                    getWindow().getDecorView().setBackgroundColor(Color.BLACK);
-                }
-                if (x > 5) {
-                    getWindow().getDecorView().setBackgroundColor(Color.RED);
-                }
+        superficie = new MiGLSurfaceView(this);
+        setContentView(superficie);
 
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-            }
-        };
-
-    }
-
-
-    private void Start() {
-        sensorManager.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    private void Stop() {
-        sensorManager.unregisterListener(sensorEventListener);
+        sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Stop();
+    public void onSensorChanged(SensorEvent e) {
+        if (e.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            superficie.renderiza2.acelerometroX = e.values[0];
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int arg1) {
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Start();
+        superficie.onResume();
+        sensorManager.registerListener(this,
+                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        superficie.onPause();
+        sensorManager.unregisterListener(this);
     }
 }
+
+
+class MiGLSurfaceView extends GLSurfaceView {
+
+    public Renderiza2 renderiza2;
+
+    public MiGLSurfaceView(Context contexto) {
+        super(contexto);
+        renderiza2 = new Renderiza2();
+        setRenderer(renderiza2);
+        requestFocus();
+        setFocusableInTouchMode(true);
+        setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+    }
+}
+
+
+
