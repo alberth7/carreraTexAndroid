@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CarreraCochesTex</string>
+    <string name="titulo"> CARRERA FORMULA 1</string>
+
+    <string name="info1"> copyright </string>
+    <string name="info2"> _alberth apaza_</string>
+    <string name="info3"> INF-323 </string>
 </resources>
