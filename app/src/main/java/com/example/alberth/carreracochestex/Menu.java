@@ -18,7 +18,7 @@ public class Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        String fuente="fuentes/HABESHAPIXELS_Bold.ttf";
+        String fuente="fuentes/GreatVibes-Regular.otf";
 
         this.habes= Typeface.createFromAsset(getAssets(),fuente);
         bntTouch=(Button) findViewById(R.id.BtnTouch);
@@ -48,7 +48,7 @@ public class Menu extends AppCompatActivity {
         btnCreditos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Menu.this,creditos.class);
+                Intent intent=new Intent(Menu.this,Credito.class);
                 startActivity(intent);
             }
         });

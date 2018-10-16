@@ -6,6 +6,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -92,8 +93,7 @@ public class Renderiza extends GLSurfaceView implements GLSurfaceView.Renderer{
 		rectanguloCoche2=new Rectangulo(112+ despCoche2X,50+despCoche2Y,40,50);
 		rectanguloCoche3=new Rectangulo(112+ despCoche3X,50+despCoche3Y,40,50);
 
-		//sonidos
-		sonidoCar.repeat();
+
 
 		/* Habilita la textura */
 		gl.glEnable(GL10.GL_TEXTURE_2D);
@@ -172,11 +172,14 @@ public class Renderiza extends GLSurfaceView implements GLSurfaceView.Renderer{
 		dibujaCoche2(gl);
 		dibujaCoche3(gl);
 
-
+		if(swCarrera==0){
+			sonidoCar.repeat();
+			swCarrera=1;
+		}
 		if (!seSobreponen(rectanguloCoche1, rectanguloCoche2)) {
 			if (!seSobreponen(rectanguloCoche1, rectanguloCoche3)) {
 				swColExplo = 0;
-				swCarrera = 0;
+
 
 				despCarreteraY = despCarreteraY - 0.01f;
 				if (despCarreteraY < -60)
@@ -237,7 +240,7 @@ public void movimientoCoches(float despCoche2X, float despCoche2Y){
 
 	@Override
 	public void onSurfaceChanged(GL10 gl, int w, int h) {
-	 
+
 		/* Ventana de despliegue */
 		gl.glViewport(0, 0, w, h);
 	 
@@ -260,6 +263,10 @@ public void movimientoCoches(float despCoche2X, float despCoche2Y){
 
 	@Override
 	public boolean onTouchEvent(MotionEvent e){
+		if(swColExplo==1){
+			Toast.makeText(this.getContext(), "PERDISTE..", Toast.LENGTH_LONG).show();
+
+		}
 		if(e.getAction()==MotionEvent.ACTION_UP){
 			//explosion.play();
 			//Toast toast1 = Toast.makeText(this.getContext(), "touch ok", Toast.LENGTH_SHORT);
