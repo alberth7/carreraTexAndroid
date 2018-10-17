@@ -6,4 +6,73 @@
     android:layout_height="match_parent"
     tools:context="com.example.alberth.carreracochestex.Menu">
 
+    <LinearLayout
+        android:id="@+id/LnLyDJ"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+    </LinearLayout>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:orientation="vertical"
+        android:layout_marginTop="100dp"
+        >
+    <TextView
+        android:id="@+id/TvMensaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:background="@drawable/degradadox"
+        android:textColor="#f9f6f6"
+        />
+
+    <TextView
+        android:id="@+id/TvPerdiste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="120dp"
+        android:text=""
+        android:layout_gravity="center"
+        android:textColor="#f9f6f6"
+        android:textSize="65dp"
+        android:background="@drawable/degradaso2x"
+        android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="25dp"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TIEMPO"
+                android:textColor="#f9f6f6"
+                android:textStyle="bold"
+                android:textSize="20sp"
+               />
+            <Chronometer
+                android:id="@+id/ChTiempo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#f9f6f6"
+                android:textStyle="bold"
+                android:text="0"
+                android:textSize="30sp"/>
+
+        </LinearLayout>
+
+
+
+</LinearLayout>
 </RelativeLayout>

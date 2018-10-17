@@ -16,6 +16,7 @@ import android.view.WindowManager;
 public class Acelerometro extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
     MiGLSurfaceView superficie;
+    public Context contextM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,8 @@ public class Acelerometro extends Activity implements SensorEventListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        contextM=this;
 
         /* Orientación de la pantalla vertical (PORTRAIT) u horizontal(LANDSCAPE) */
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -70,7 +73,7 @@ class MiGLSurfaceView extends GLSurfaceView {
 
     public MiGLSurfaceView(Context contexto) {
         super(contexto);
-        renderiza2 = new Renderiza2();
+        renderiza2 = new Renderiza2(contexto);
         setRenderer(renderiza2);
         requestFocus();
         setFocusableInTouchMode(true);

@@ -48,4 +48,15 @@ public class SonidoSoundPool {
         soundPool.play(sonidoID, 1, 1, 0, -1, 1);
 
     }
+    public  void pausa(){
+        soundPool.pause(sonidoID);
+    }
+
+    public SoundPool getSoundPool() {
+        return soundPool;
+    }
+
+    public int getSonidoID() {
+        return sonidoID;
+    }
 }

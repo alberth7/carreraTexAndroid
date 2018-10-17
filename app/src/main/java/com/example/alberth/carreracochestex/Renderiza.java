@@ -6,6 +6,8 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.view.MotionEvent;
+import android.widget.Chronometer;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -45,20 +47,38 @@ public class Renderiza extends GLSurfaceView implements GLSurfaceView.Renderer{
 
 	private int swColExplo =0;
 	private  int swCarrera=0;
+	private int swFinalizarJuego=0;
 
 	Random rando=new Random();
 
+	//mensjaes
 
-	public Renderiza(Context contexto) {
+	TextView tvMensaje,tvPerdiste,tvTiempo;
+	Chronometer chronometer;
+
+	//tiempo
+	private int tiempo =0;
+
+	MotionEvent motionEvent;
+
+	public Renderiza(Context contexto, Chronometer tiempo,TextView mensaje, TextView perdiste) {
 		super(contexto);
 		this.contexto = contexto;
+
 		sonidoCar= new SonidoSoundPool(contexto,"scar2.ogg");
 		explosion=new SonidoSoundPool(contexto,"explosion.ogg");
+		//MotionEvent motionEvent = MotionEvent.obtain(1,1,MotionEvent.ACTION_UP, 10, 10 , 0);
+
+
 		this.setRenderer(this);
 		this.requestFocus();
 		this.setFocusableInTouchMode(true);
 		this.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-
+		tvMensaje=mensaje;
+		tvTiempo=tiempo;
+		tvPerdiste=perdiste;
+		chronometer=tiempo;
+		chronometer.start();
 
 	}	
 	
@@ -171,16 +191,23 @@ public class Renderiza extends GLSurfaceView implements GLSurfaceView.Renderer{
 
 		dibujaCoche2(gl);
 		dibujaCoche3(gl);
-
-		if(swCarrera==0){
+		//sonido carrera
+		if(swCarrera==0) {
+			//System.out.println("sonido" + sonidoCar.getSonidoID());
+			swCarrera = 1;
 			sonidoCar.repeat();
-			swCarrera=1;
 		}
+
+
+		// mensajes
+		tiempo+=1;
+
 		if (!seSobreponen(rectanguloCoche1, rectanguloCoche2)) {
 			if (!seSobreponen(rectanguloCoche1, rectanguloCoche3)) {
+
+
+
 				swColExplo = 0;
-
-
 				despCarreteraY = despCarreteraY - 0.01f;
 				if (despCarreteraY < -60)
 					despCarreteraY = 0;
@@ -213,7 +240,7 @@ public class Renderiza extends GLSurfaceView implements GLSurfaceView.Renderer{
 
 
 			} else {
-				swCarrera = 1;
+
 				if (swColExplo == 0) {
 					swColExplo = 1;
 					finDeJuegoSonido();
@@ -221,7 +248,7 @@ public class Renderiza extends GLSurfaceView implements GLSurfaceView.Renderer{
 			}
 
 		}else {
-			swCarrera = 1;
+
 			if (swColExplo == 0) {
 				swColExplo = 1;
 				finDeJuegoSonido();
@@ -229,13 +256,14 @@ public class Renderiza extends GLSurfaceView implements GLSurfaceView.Renderer{
 		}
 	}
 
-public void movimientoCoches(float despCoche2X, float despCoche2Y){
 
-}
 
 	private void finDeJuegoSonido() {
+		//onTouchEvent(motionEvent);
+		swFinalizarJuego=1;
 		explosion.play();
 		sonidoCar.stop();
+
 	}
 
 	@Override
@@ -262,11 +290,17 @@ public void movimientoCoches(float despCoche2X, float despCoche2Y){
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent e){
-		if(swColExplo==1){
-			Toast.makeText(this.getContext(), "PERDISTE..", Toast.LENGTH_LONG).show();
+		public boolean onTouchEvent(MotionEvent e){
 
+		if(swFinalizarJuego==1){
+			tvPerdiste.setText("perdiste");
+			chronometer.stop();
 		}
+
+		if(chronometer.getBase()==0){
+			tvMensaje.setText("vamos");
+		}
+
 		if(e.getAction()==MotionEvent.ACTION_UP){
 			//explosion.play();
 			//Toast toast1 = Toast.makeText(this.getContext(), "touch ok", Toast.LENGTH_SHORT);
